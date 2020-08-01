@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Base64;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -18,14 +19,18 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.Base64Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.diogoro.lyncastest.model.PessoaDto;
 import dev.diogoro.lyncastest.service.PessoaService;
 
+@ContextConfiguration
 @WebMvcTest(PessoaController.class)
 class PessoaControllerTest extends BaseTest {
 
@@ -42,7 +47,9 @@ class PessoaControllerTest extends BaseTest {
 	void testObterPessoaPorId() throws Exception {
 		given(pessoaService.obterPessoaPorId(any())).willReturn(obterPessoaValida());
 
-		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString()).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString())
+				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
+				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 
@@ -53,7 +60,9 @@ class PessoaControllerTest extends BaseTest {
 
 		given(pessoaService.cadastrarPessoa(any())).willReturn(pessoaDto);
 
-		mockMvc.perform(post("/api/v1/pessoa/").contentType(MediaType.APPLICATION_JSON).content(pessoaDtoJson)
+		mockMvc.perform(post("/api/v1/pessoa/")
+				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
+				.contentType(MediaType.APPLICATION_JSON).content(pessoaDtoJson)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
 	}
 
@@ -64,7 +73,9 @@ class PessoaControllerTest extends BaseTest {
 
 		given(pessoaService.atualizarPessoa(any(), any())).willReturn(pessoaDto);
 
-		mockMvc.perform(put("/api/v1/pessoa/" + UUID.randomUUID().toString()).contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(put("/api/v1/pessoa/" + UUID.randomUUID().toString())
+				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(pessoaDtoJson)).andExpect(status().isNoContent());
 	}
 	
@@ -72,7 +83,9 @@ class PessoaControllerTest extends BaseTest {
 	void testObterListaPessoas() throws Exception{
 		given(pessoaService.obterListaPessoas()).willReturn(obterListaPessoasValidas());
 
-		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString()).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString())
+				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
+				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 
