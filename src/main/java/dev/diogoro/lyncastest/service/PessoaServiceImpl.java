@@ -3,6 +3,8 @@ package dev.diogoro.lyncastest.service;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,13 +20,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class PessoaServiceImpl implements PessoaService {
-	
+
 	private final PessoaRepository pessoaRepository;
 	private final PessoaMapper pessoaMapper;
 
 	@Override
 	public PessoaDto obterPessoaPorId(UUID idPessoa) {
-		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.findById(idPessoa).orElseThrow(PessoaNaoEncontradaException::new));
+		return pessoaMapper.pessoaParaPessoaDto(
+				pessoaRepository.findById(idPessoa).orElseThrow(PessoaNaoEncontradaException::new));
 	}
 
 	@Override
@@ -35,14 +38,14 @@ public class PessoaServiceImpl implements PessoaService {
 	@Override
 	public PessoaDto atualizarPessoa(UUID idPessoa, @Valid PessoaDto pessoaDto) {
 		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElseThrow(PessoaNaoEncontradaException::new);
-		
+
 		pessoa.setCpf(pessoaDto.getCpf());
 		pessoa.setNome(pessoaDto.getNome());
 		pessoa.setDataNascimento((Date) pessoaDto.getDataNascimento());
 		pessoa.setEmail(pessoaDto.getEmail());
 		pessoa.setNaturalidade(pessoa.getNaturalidade());
 		pessoa.setSexo(pessoaDto.getSexo());
-		
+
 		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.save(pessoa));
 	}
 
@@ -53,7 +56,8 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public List<PessoaDto> obterListaPessoas() {
-		return (List<PessoaDto>) pessoaRepository.findAll().stream().map(mapper -> pessoaMapper.pessoaParaPessoaDto(mapper));
+		return (List<PessoaDto>) pessoaRepository.findAll().stream()
+				.map(pessoa -> pessoaMapper.pessoaParaPessoaDto(pessoa)).collect(Collectors.toList());
 	}
 
 }

@@ -51,9 +51,9 @@ public class PessoaController {
 		pessoaService.apagarPessoa(idPessoa);
 	}
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<PessoaDto> obterListaPessoas() {
-		return pessoaService.obterListaPessoas();
+	@GetMapping
+	public ResponseEntity<List<PessoaDto>> obterListaPessoas() {
+		return new ResponseEntity<>(pessoaService.obterListaPessoas(), HttpStatus.OK);
 	}
 
 }

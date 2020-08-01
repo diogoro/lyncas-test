@@ -73,6 +73,14 @@ class PessoaControllerTest extends BaseTest {
 		mockMvc.perform(put("/api/v1/pessoa/" + UUID.randomUUID().toString()).contentType(MediaType.APPLICATION_JSON)
 				.content(pessoaDtoJson)).andExpect(status().isNoContent());
 	}
+	
+	@Test
+	void testObterListaPessoas() throws Exception{
+		given(pessoaService.obterListaPessoas()).willReturn(obterListaPessoasValidas());
+
+		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString()).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
 
 	//@Test //Precisa pensar nesse teste
 	void testApagarPessoa() throws Exception {
