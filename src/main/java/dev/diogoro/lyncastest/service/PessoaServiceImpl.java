@@ -23,11 +23,15 @@ public class PessoaServiceImpl implements PessoaService {
 
 	private final PessoaRepository pessoaRepository;
 	private final PessoaMapper pessoaMapper;
-
+	private final String MSG_PESSOA_NAO_ENCONTRADA = "Pessoa inexistnete";
+	private final String MSG_CPF_EXISTENTE = "Cpf ja cadastrado";
+	
+	
 	@Override
 	public PessoaDto obterPessoaPorId(UUID idPessoa) {
 		return pessoaMapper.pessoaParaPessoaDto(
-				pessoaRepository.findById(idPessoa).orElseThrow(PessoaNaoEncontradaException::new));
+				pessoaRepository.findById(idPessoa)
+				.orElseThrow(() -> new PessoaNaoEncontradaException(MSG_PESSOA_NAO_ENCONTRADA)));
 	}
 
 	@Override
@@ -41,7 +45,8 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public PessoaDto atualizarPessoa(UUID idPessoa, @Valid PessoaDto pessoaDto) {
-		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElseThrow(PessoaNaoEncontradaException::new);
+		Pessoa pessoa = pessoaRepository.findById(idPessoa)
+				.orElseThrow(() -> new PessoaNaoEncontradaException(MSG_PESSOA_NAO_ENCONTRADA));
 		
 
 		pessoa.setCpf(pessoaDto.getCpf());
