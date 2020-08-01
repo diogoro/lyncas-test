@@ -3,11 +3,9 @@ package dev.diogoro.lyncastest.controller;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,13 +33,13 @@ public class PessoaController {
 	}
 
 	@PostMapping
-	public ResponseEntity cadastrarPessoa(@RequestBody @Valid PessoaDto pessoa) {
+	public ResponseEntity cadastrarPessoa(@RequestBody @Validated PessoaDto pessoa) {
 		return new ResponseEntity(pessoaService.cadastrarPessoa(pessoa), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{idPessoa}")
 	public ResponseEntity atualizarPessoa(@PathVariable("idPessoa") UUID idPessoa,
-			@RequestBody @Valid PessoaDto pessoa) {
+			@RequestBody @Validated PessoaDto pessoa) {
 		return new ResponseEntity(pessoaService.atualizarPessoa(idPessoa, pessoa), HttpStatus.NO_CONTENT);
 	}
 

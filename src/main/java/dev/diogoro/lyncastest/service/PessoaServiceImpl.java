@@ -3,15 +3,15 @@ package dev.diogoro.lyncastest.service;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 
-import dev.diogoro.lyncastest.controller.PessoaNaoEncontradaException;
 import dev.diogoro.lyncastest.domain.Pessoa;
+import dev.diogoro.lyncastest.exception.CpfExistenteException;
+import dev.diogoro.lyncastest.exception.PessoaNaoEncontradaException;
 import dev.diogoro.lyncastest.mappers.PessoaMapper;
 import dev.diogoro.lyncastest.model.PessoaDto;
 import dev.diogoro.lyncastest.repository.PessoaRepository;
@@ -31,17 +31,22 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public PessoaDto cadastrarPessoa(@Valid PessoaDto pessoa) {
-		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.save(pessoaMapper.pessoaDtoParaPessoa(pessoa)));
+	public PessoaDto cadastrarPessoa(@Valid PessoaDto pessoaDto) {
+		List<Pessoa> pessoas = pessoaRepository.findAll();
+		if (pessoas.stream().anyMatch(pessoa -> pessoa.getCpf().equals(pessoaDto.getCpf()))) {
+			throw new CpfExistenteException();
+		}
+		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.save(pessoaMapper.pessoaDtoParaPessoa(pessoaDto)));
 	}
 
 	@Override
 	public PessoaDto atualizarPessoa(UUID idPessoa, @Valid PessoaDto pessoaDto) {
 		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElseThrow(PessoaNaoEncontradaException::new);
+		
 
 		pessoa.setCpf(pessoaDto.getCpf());
 		pessoa.setNome(pessoaDto.getNome());
-		pessoa.setDataNascimento((Date) pessoaDto.getDataNascimento());
+		pessoa.setDataNascimento(new Date(pessoaDto.getDataNascimento().getTime()));
 		pessoa.setEmail(pessoaDto.getEmail());
 		pessoa.setNaturalidade(pessoa.getNaturalidade());
 		pessoa.setSexo(pessoaDto.getSexo());
