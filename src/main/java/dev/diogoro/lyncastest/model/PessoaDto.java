@@ -37,6 +37,7 @@ public class PessoaDto {
 	@PastOrPresent
 	private Date dataNascimento;
 	private String naturalidade;
+	private String nacionalidade;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
 	@Null
 	private OffsetDateTime dataCriacao;

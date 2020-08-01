@@ -39,6 +39,7 @@ public class Pessoa {
 	private String email;
 	private Date dataNascimento;
 	private String naturalidade;
+	private String nacionalidade;
 	@CreationTimestamp
 	@Column(updatable = false)
 	private Timestamp dataCriacao;
