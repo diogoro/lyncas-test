@@ -48,6 +48,10 @@ public class PessoaServiceImpl implements PessoaService {
 		Pessoa pessoa = pessoaRepository.findById(idPessoa)
 				.orElseThrow(() -> new PessoaNaoEncontradaException(MSG_PESSOA_NAO_ENCONTRADA));
 		
+		Pessoa pessoaCpfJaCadastrado = pessoaRepository.findByCpfAndIdNot(pessoaDto.getCpf(), idPessoa);
+		if (pessoaCpfJaCadastrado != null) {
+			throw new CpfExistenteException(MSG_CPF_EXISTENTE);
+		}
 
 		pessoa.setCpf(pessoaDto.getCpf());
 		pessoa.setNome(pessoaDto.getNome());

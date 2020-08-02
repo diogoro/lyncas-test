@@ -9,4 +9,6 @@ import dev.diogoro.lyncastest.domain.Pessoa;
 public interface PessoaRepository extends JpaRepository<Pessoa, UUID>{
 
 	Pessoa findByCpf(String cpf);
+	
+	Pessoa findByCpfAndIdNot(String cpf, UUID id);
 }
