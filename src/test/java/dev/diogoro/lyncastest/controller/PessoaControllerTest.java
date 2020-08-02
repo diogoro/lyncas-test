@@ -47,7 +47,7 @@ class PessoaControllerTest extends BaseTest {
 	void testObterPessoaPorId() throws Exception {
 		given(pessoaService.obterPessoaPorId(any())).willReturn(obterPessoaValida());
 
-		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString())
+		mockMvc.perform(get("/api/v1/pessoas/" + UUID.randomUUID().toString())
 				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
@@ -60,7 +60,7 @@ class PessoaControllerTest extends BaseTest {
 
 		given(pessoaService.cadastrarPessoa(any())).willReturn(pessoaDto);
 
-		mockMvc.perform(post("/api/v1/pessoa/")
+		mockMvc.perform(post("/api/v1/pessoas/")
 				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
 				.contentType(MediaType.APPLICATION_JSON).content(pessoaDtoJson)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
@@ -73,7 +73,7 @@ class PessoaControllerTest extends BaseTest {
 
 		given(pessoaService.atualizarPessoa(any(), any())).willReturn(pessoaDto);
 
-		mockMvc.perform(put("/api/v1/pessoa/" + UUID.randomUUID().toString())
+		mockMvc.perform(put("/api/v1/pessoas/" + UUID.randomUUID().toString())
 				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(pessoaDtoJson)).andExpect(status().isNoContent());
@@ -83,7 +83,7 @@ class PessoaControllerTest extends BaseTest {
 	void testObterListaPessoas() throws Exception{
 		given(pessoaService.obterListaPessoas()).willReturn(obterListaPessoasValidas());
 
-		mockMvc.perform(get("/api/v1/pessoa/" + UUID.randomUUID().toString())
+		mockMvc.perform(get("/api/v1/pessoas/" + UUID.randomUUID().toString())
 				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
