@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,6 +37,7 @@ public class Pessoa {
 	
 	private String nome;
 	private Character sexo;
+	@Email
 	private String email;
 	private Date dataNascimento;
 	private String naturalidade;
