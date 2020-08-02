@@ -35,9 +35,9 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public PessoaDto cadastrarPessoa(@Valid PessoaDto pessoaDto) {
-		List<Pessoa> pessoas = pessoaRepository.findAll();
+		Pessoa pessoas = pessoaRepository.findByCpf(pessoaDto.getCpf());
 		
-		if (pessoas.stream().filter(pessoa -> pessoa.getCpf().equals(pessoaDto.getCpf())).findAny().isPresent()) {
+		if (pessoas != null) {
 			throw new CpfExistenteException(MSG_CPF_EXISTENTE);
 		}
 		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.save(pessoaMapper.pessoaDtoParaPessoa(pessoaDto)));
