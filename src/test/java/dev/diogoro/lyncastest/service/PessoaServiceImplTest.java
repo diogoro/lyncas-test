@@ -45,6 +45,7 @@ public class PessoaServiceImplTest extends BaseTest {
 		PessoaDto pessoaTeste = obterPessoaServiceTest();
 		PessoaDto pessoaTesteSalva = pessoaService.cadastrarPessoa(pessoaTeste);
 		pessoaTeste.setNaturalidade("Catarinense");
+		pessoaTeste.setNacionalidade("Brasil");
 		pessoaService.atualizarPessoa(pessoaTesteSalva.getId(), pessoaTeste);
 
 		PessoaDto pessoaTesteAtualiazada = pessoaService.obterPessoaPorId(pessoaTesteSalva.getId());
