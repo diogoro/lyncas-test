@@ -53,7 +53,8 @@ public class PessoaServiceImpl implements PessoaService {
 		pessoa.setNome(pessoaDto.getNome());
 		pessoa.setDataNascimento(new Date(pessoaDto.getDataNascimento().getTime()));
 		pessoa.setEmail(pessoaDto.getEmail());
-		pessoa.setNaturalidade(pessoa.getNaturalidade());
+		pessoa.setNaturalidade(pessoaDto.getNaturalidade());
+		pessoa.setNacionalidade(pessoaDto.getNacionalidade());
 		pessoa.setSexo(pessoaDto.getSexo());
 
 		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.save(pessoa));

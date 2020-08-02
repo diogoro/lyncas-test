@@ -47,5 +47,15 @@ public class BaseTest {
 				.email("sicrano@xyz.com")
 				.build();
 	}
+	
+	protected PessoaDto obterPessoaServiceTest() {
+		return PessoaDto.builder()
+				.nome("Maria")
+				.sexo('F')
+				.cpf("76902757704")
+				.email("maria@maria.com")
+				.dataNascimento(new Date())
+				.build();
+	}
 
 }
