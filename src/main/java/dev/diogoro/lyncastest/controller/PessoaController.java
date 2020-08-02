@@ -21,7 +21,7 @@ import dev.diogoro.lyncastest.service.PessoaService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/pessoa")
+@RequestMapping("/api/v1/pessoas")
 @RestController
 public class PessoaController {
 
