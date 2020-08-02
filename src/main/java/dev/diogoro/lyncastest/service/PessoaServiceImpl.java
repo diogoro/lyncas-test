@@ -26,7 +26,6 @@ public class PessoaServiceImpl implements PessoaService {
 	private final String MSG_PESSOA_NAO_ENCONTRADA = "Pessoa inexistnete";
 	private final String MSG_CPF_EXISTENTE = "Cpf ja cadastrado";
 	
-	
 	@Override
 	public PessoaDto obterPessoaPorId(UUID idPessoa) {
 		return pessoaMapper.pessoaParaPessoaDto(
@@ -37,8 +36,9 @@ public class PessoaServiceImpl implements PessoaService {
 	@Override
 	public PessoaDto cadastrarPessoa(@Valid PessoaDto pessoaDto) {
 		List<Pessoa> pessoas = pessoaRepository.findAll();
-		if (pessoas.stream().anyMatch(pessoa -> pessoa.getCpf().equals(pessoaDto.getCpf()))) {
-			throw new CpfExistenteException();
+		
+		if (pessoas.stream().filter(pessoa -> pessoa.getCpf().equals(pessoaDto.getCpf())).findAny().isPresent()) {
+			throw new CpfExistenteException(MSG_CPF_EXISTENTE);
 		}
 		return pessoaMapper.pessoaParaPessoaDto(pessoaRepository.save(pessoaMapper.pessoaDtoParaPessoa(pessoaDto)));
 	}
@@ -64,7 +64,6 @@ public class PessoaServiceImpl implements PessoaService {
 		pessoaRepository.deleteById(idPessoa);
 	}
 
-	@Override
 	public List<PessoaDto> obterListaPessoas() {
 		return (List<PessoaDto>) pessoaRepository.findAll().stream()
 				.map(pessoa -> pessoaMapper.pessoaParaPessoaDto(pessoa)).collect(Collectors.toList());
