@@ -1,3 +1,7 @@
-dev/diogoro/lyncastest/LyncasTestApplicationTests.class
+dev/diogoro/lyncastest/BaseTest.class
+dev/diogoro/lyncastest/controller/SourceControllerTest.class
 dev/diogoro/lyncastest/controller/PessoaControllerTest.class
-dev/diogoro/lyncastest/controller/BaseTest.class
+dev/diogoro/lyncastest/model/PessoaDtoTest.class
+dev/diogoro/lyncastest/service/PessoaServiceImplTest.class
+dev/diogoro/lyncastest/repository/PessoaRepositoryTest.class
+dev/diogoro/lyncastest/LyncasTestApplicationTests.class

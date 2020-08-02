@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-07-31T19:01:12-0300",
+    date = "2020-08-02T16:40:26-0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.7 (Oracle Corporation)"
 )
 @Component
@@ -36,6 +36,7 @@ public class PessoaMapperImpl implements PessoaMapper {
             pessoa.dataNascimento( new Date( pessoaDto.getDataNascimento().getTime() ) );
         }
         pessoa.naturalidade( pessoaDto.getNaturalidade() );
+        pessoa.nacionalidade( pessoaDto.getNacionalidade() );
         pessoa.dataCriacao( dateMapper.asTimestamp( pessoaDto.getDataCriacao() ) );
         pessoa.dataUltimaAtualizacao( dateMapper.asTimestamp( pessoaDto.getDataUltimaAtualizacao() ) );
         pessoa.cpf( pessoaDto.getCpf() );
@@ -57,6 +58,7 @@ public class PessoaMapperImpl implements PessoaMapper {
         pessoaDto.email( pessoa.getEmail() );
         pessoaDto.dataNascimento( pessoa.getDataNascimento() );
         pessoaDto.naturalidade( pessoa.getNaturalidade() );
+        pessoaDto.nacionalidade( pessoa.getNacionalidade() );
         pessoaDto.dataCriacao( dateMapper.asOffsetDateTime( pessoa.getDataCriacao() ) );
         pessoaDto.dataUltimaAtualizacao( dateMapper.asOffsetDateTime( pessoa.getDataUltimaAtualizacao() ) );
         pessoaDto.cpf( pessoa.getCpf() );

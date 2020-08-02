@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Lyncas Test</title>
+</head>
+<body>
+	<h1>Lista de Pessoas</h1>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>Sexo</th>
+			<th>Email</th>
+			<th>Cpf</th>
+			<th>Data Nascimento</th>
+			<th>Naturalidade</th>
+			<th>Nacionalidade</th>
+			<th>Data Criacao</th>
+			<th>Data Ultima Atualizacao</th>
+		</tr>
+		<tr th:each="pessoa : ${pessoas}">
+			<td th:text="${pessoa.id}">123</td>
+			<td th:text="${pessoa.nome}">123</td>
+			<td th:text="${pessoa.sexo}">Spring in Action</td>
+			<td th:text="${pessoa.email}">Wrox</td>
+			<td th:text="${pessoa.cpf}">123</td>
+			<td th:text="${#dates.format(pessoa.dataNascimento, 'dd/MM/yyyy')}">123</td>
+			<td th:text="${pessoa.naturalidade}">123</td>
+			<td th:text="${pessoa.nacionalidade}">123</td>
+			<td th:text="${pessoa.dataCriacao}">123</td>
+			<td th:text="${pessoa.dataUltimaAtualizacao}">123</td>
+			<td>
+				<div>
+					<a th:href="@{/editar/{id}(id=${pessoa.id})}">Editar</a> <a
+						th:href="@{/apagar/{id}(id=${pessoa.id})}">Excluir</a>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div>
+		<a th:href="@{/adicionar/}">Adicionar</a>
+	</div>
+</body>
+</html>
