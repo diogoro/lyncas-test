@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Cadastro de Pessoas</title>
+</head>
+<body>
+	<h1>Cadastro de Pessoas</h1>
+	<div>
+		<form th:object="${pessoa}" th:action="@{/salvar}" method="POST">
+			<div>
+				<fieldset>
+					<div>
+						<div th:if="${#fields.hasAnyErrors()}">
+							<div th:each="detailedError : ${#fields.detailedErrors()}">
+								<span th:text="${detailedError.message}"></span>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div>
+							<input type="hidden" id="id" th:field="*{id}" readOnly="readonly" />
+						</div>
+					</div>
+					<div>
+						<div th:classappend="${#fields.hasErrors('nome')}? 'has-error'">
+							<label>Nome</label> <input type="text" th:field="*{nome}"
+								autofocus="autofocus" placeholder="Informe o nome" />
+						</div>
+					</div>
+					<div>
+						<div th:classappend="${#fields.hasErrors('cpf')}? 'has-error'">
+							<label>Cpf</label> <input type="text" th:field="*{cpf}"
+								maxlength="11" placeholder="Informe o cpf" />
+						</div>
+					</div>
+					<div>
+						<div
+							th:classappend="${#fields.hasErrors('dataNascimento')}? 'has-error'">
+							<label>Data Nascimento</label> <input type="date"
+								th:field="*{{dataNascimento}}" placeholder="Formato: 01/01/2020"
+								th:value="${#dates.format(pessoa.dataNascimento, dateFormat)}" />
+
+						</div>
+					</div>
+					<div>
+						<div th:classappend="${#fields.hasErrors('sexo')}? 'has-error'">
+							<label>Sexo</label> <input type="text" th:field="*{sexo}"
+								maxlength="1" placeholder=" M ou F"/>
+						</div>
+					</div>
+					<div>
+						<div
+							th:classappend="${#fields.hasErrors('naturalidade')}? 'has-error'">
+							<label>Naturalidade</label> <input type="text"
+								th:field="*{naturalidade}" autofocus="autofocus"
+								placeholder="Informe a naturalidade" />
+						</div>
+					</div>
+					<div>
+						<div
+							th:classappend="${#fields.hasErrors('nacionalidade')}? 'has-error'">
+							<label>Nacionalidade</label> <input type="text"
+								th:field="*{nacionalidade}" autofocus="autofocus"
+								placeholder="Informe a nacionalidade" />
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div>
+				<button type="submit">Salvar</button>
+				<a th:href="@{/}">Cancelar</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
