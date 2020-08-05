@@ -28,7 +28,7 @@ public class PessoaFrontController {
 
 	@RequestMapping("/")
 	public ModelAndView obterListaPessoas() {
-		ModelAndView mv = new ModelAndView("/pessoas");
+		ModelAndView mv = new ModelAndView("pessoas");
 		mv.addObject("pessoas", pessoaService.obterListaPessoas());
 		return mv;
 	}
@@ -36,7 +36,7 @@ public class PessoaFrontController {
 	@RequestMapping("/adicionar")
 	public ModelAndView adicionarPessoa(PessoaDto pessoa) {
 
-		ModelAndView mv = new ModelAndView("/adicionarPessoa");
+		ModelAndView mv = new ModelAndView("adicionarPessoa");
 		mv.addObject("pessoa", pessoa);
 
 		return mv;
