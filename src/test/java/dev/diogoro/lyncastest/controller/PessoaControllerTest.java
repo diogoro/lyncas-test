@@ -89,14 +89,16 @@ class PessoaControllerTest extends BaseTest {
 				.andExpect(status().isOk());
 	}
 
-	//@Test //Precisa pensar nesse teste
+	@Test //Precisa pensar nesse teste
 	void testApagarPessoa() throws Exception {
 		UUID randomUUID = UUID.randomUUID();
 		
 		PessoaService pessoaSpy = Mockito.spy(pessoaService);
 		doNothing().when(pessoaSpy).apagarPessoa(randomUUID);
 		
-		mockMvc.perform(delete("/api/v1/beer/" + randomUUID.toString())).andExpect(status().isNoContent());
+		mockMvc.perform(delete("/api/v1/pessoas/" + randomUUID.toString())
+				.header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
+		.andExpect(status().isNoContent());
 		
 		verify(pessoaService, times(1)).apagarPessoa(randomUUID);
 	}
